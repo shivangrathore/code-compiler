@@ -23,6 +23,9 @@ importers:
       '@repo/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@repo/zod':
+        specifier: workspace:*
+        version: link:../../packages/zod
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -185,6 +188,19 @@ importers:
         version: 19.0.3(@types/react@19.0.8)
       typescript:
         specifier: 5.7.3
+        version: 5.7.3
+
+  packages/zod:
+    dependencies:
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: ^5.7.3
         version: 5.7.3
 
 packages:

@@ -1,0 +1,17 @@
+meta {
+  name: Run Code 3
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:5000/run
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "code": "print('Hello world')"
+  }
+}

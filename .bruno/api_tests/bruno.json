@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Code Compiler (v1)",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

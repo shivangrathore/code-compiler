@@ -1,0 +1,17 @@
+meta {
+  name: Run Code 2
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:5000/run
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "code": "const c = {a: 0};setInterval(() => {c.a += 1;console.log('hello ' + c.a)}, 1000);setTimeout(() => {process.exit()}, 10000)"
+  }
+}
