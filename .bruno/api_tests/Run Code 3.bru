@@ -5,13 +5,14 @@ meta {
 }
 
 post {
-  url: http://localhost:5000/run
+  url: http://localhost:5000/api/runner/execute
   body: json
   auth: none
 }
 
 body:json {
   {
-    "code": "print('Hello world')"
+    "code": "setTimeout(() => {console.log('Hello')}, 12000)",
+    "lang": "py"
   }
 }

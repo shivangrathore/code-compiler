@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "@repo/auth": "workspace:*",
-    "@repo/zod": "workspace:*",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
+    "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
     "nodemon": "^3.1.9"

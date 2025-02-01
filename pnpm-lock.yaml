@@ -23,16 +23,19 @@ importers:
       '@repo/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@repo/zod':
-        specifier: workspace:*
-        version: link:../../packages/zod
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
       express:
         specifier: ^4.21.2
         version: 4.21.2
+      uuid:
+        specifier: ^11.0.5
+        version: 11.0.5
     devDependencies:
+      '@repo/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -157,6 +160,25 @@ importers:
         specifier: ^8.22.0
         version: 8.22.0(eslint@9.19.0)(typescript@5.7.3)
 
+  packages/redis:
+    devDependencies:
+      '@repo/types':
+        specifier: workspace:*
+        version: link:../types
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+
+  packages/types:
+    dependencies:
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+
   packages/typescript-config: {}
 
   packages/ui:
@@ -188,19 +210,6 @@ importers:
         version: 19.0.3(@types/react@19.0.8)
       typescript:
         specifier: 5.7.3
-        version: 5.7.3
-
-  packages/zod:
-    dependencies:
-      zod:
-        specifier: ^3.24.1
-        version: 3.24.1
-    devDependencies:
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      typescript:
-        specifier: ^5.7.3
         version: 5.7.3
 
 packages:
@@ -2460,6 +2469,10 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  uuid@11.0.5:
+    resolution: {integrity: sha512-508e6IcKLrhxKdBbcA2b4KQZlLVp2+J5UwQ6F7Drckkc5N9ZJwFa4TgWtsww9UG8fGHbm6gbV19TdM5pQ4GaIA==}
+    hasBin: true
 
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
@@ -5161,6 +5174,8 @@ snapshots:
   util-deprecate@1.0.2: {}
 
   utils-merge@1.0.1: {}
+
+  uuid@11.0.5: {}
 
   v8-compile-cache-lib@3.0.1: {}
 

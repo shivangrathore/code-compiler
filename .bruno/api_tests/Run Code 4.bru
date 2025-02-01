@@ -1,0 +1,22 @@
+meta {
+  name: Run Code 4
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:5000/api/runner/poll?id=qp5ame
+  body: json
+  auth: none
+}
+
+params:query {
+  id: qp5ame
+}
+
+body:json {
+  {
+    "code": "print('Sachin Rathore')",
+    "lang": "py"
+  }
+}
