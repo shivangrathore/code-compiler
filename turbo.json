@@ -5,7 +5,10 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "start": {
+      "dependsOn": ["^start"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -14,6 +17,12 @@
       "dependsOn": ["^check-types"]
     },
     "dev": {
+      "dependsOn": [
+        "@repo/types#build",
+        "@repo/db#build",
+        "@repo/auth#build",
+        "@repo/redis#build"
+      ],
       "cache": false,
       "persistent": true
     }

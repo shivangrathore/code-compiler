@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "worker",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -9,16 +9,12 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@repo/auth": "workspace:*",
     "@repo/redis": "workspace:*",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "uuid": "^11.0.5"
+    "@repo/types": "workspace:*"
   },
   "devDependencies": {
     "@repo/types": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/express": "^5.0.0",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2"
   }

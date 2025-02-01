@@ -1,51 +1,43 @@
 import { Router } from "express";
-import { spawn } from "child_process";
 import { RunCode } from "@repo/types/zod";
-import { Job } from "@repo/types";
+import { Job, QueueJob } from "@repo/types";
 import { v4 as uuidv4 } from "uuid";
+import redis from "@repo/redis/client";
 
-const jobs = new Map<string, Job>();
 export const router: Router = Router();
 router.post("/execute", async (req, res) => {
   const body = await RunCode.parseAsync(req.body);
-  const process = spawn("docker", [
-    "run",
-    "--rm",
-    "node:latest",
-    "node",
-    "-e",
-    body.code,
-  ]);
-  process.stdout.setEncoding("utf8");
-  const lines: string[] = [];
-  process.stdout.on("data", (data) => {
-    lines.push(data);
-  });
   const id = uuidv4();
-  const jobTimeout = setTimeout(() => {
-    const job = jobs.get(id);
-    if (job && job.state === "running") {
-      process.kill();
-      jobs.set(id, { state: "timeout" });
-    }
-  }, 5000);
-  jobs.set(id, { state: "running" });
-
-  process.on("exit", (code) => {
-    clearTimeout(jobTimeout);
-    jobs.set(id, { state: "done", result: lines.join(""), code: code || 0 });
-  });
-
+  const multi = redis.multi();
+  multi.hset(
+    "executor:jobs",
+    id,
+    JSON.stringify({
+      state: "queued",
+    } as Job),
+  );
+  multi.lpush(
+    "executor:queue",
+    JSON.stringify({
+      id: id,
+      code: body.code,
+      lang: body.lang,
+    } as QueueJob),
+  );
+  multi.exec();
   res.send({ id });
 });
 
 router.get("/poll", async (req, res) => {
   const id = req.query.id as string;
-  const job = jobs.get(id);
-  if (!job) {
+  const _job = await redis.hget("executor:jobs", id);
+  if (!_job) {
     res.status(404).json();
     return;
   }
+  const job = JSON.parse(_job) as Job;
+  res.header("Cache-Control", "no-store");
+
   switch (job.state) {
     case "running":
       res.status(202).json({ status: "running" });
