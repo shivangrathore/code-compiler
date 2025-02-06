@@ -37,8 +37,10 @@ router.get("/poll", async (req, res) => {
   }
   const job = JSON.parse(_job) as Job;
   res.header("Cache-Control", "no-store");
-
   switch (job.state) {
+    case "queued":
+      res.status(202).json({ status: "queued" });
+      break;
     case "running":
       res.status(202).json({ status: "running" });
       break;
@@ -47,6 +49,9 @@ router.get("/poll", async (req, res) => {
       break;
     case "done":
       res.json({ status: "done", result: job.result });
+      break;
+    default:
+      res.status(500).json();
       break;
   }
 });
