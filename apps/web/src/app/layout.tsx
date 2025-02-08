@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className}  antialiased dark overflow-x-hidden w-screen relative`}
+        className={`${inter.className} antialiased dark overflow-x-hidden relative max-h-screen`}
       >
         <QueryProvider>{children}</QueryProvider>
       </body>

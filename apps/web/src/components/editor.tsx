@@ -99,7 +99,6 @@ const CustomEditor = ({
           </SelectContent>
         </Select>
         <Button
-          size="sm"
           variant="outline"
           className="bg-green-700"
           onClick={async () => runCode()}

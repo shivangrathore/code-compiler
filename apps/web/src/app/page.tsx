@@ -1,34 +1,14 @@
+import { Navbar } from "@/components/navbar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { FEATURES, HERO_PILLS, LANGUAGES_CTA } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { ChevronRight, LucideIcon, MenuIcon, StarIcon } from "lucide-react";
+import { ChevronRight, LucideIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-export function Navbar() {
-  return (
-    <div className="flex justify-between p-3 md:p-6 items-center max-w-screen-xl mx-auto w-full">
-      <Link href="/" className="text-2xl font-bold">
-        <span className="text-primary">C</span>
-        ode <span className="text-primary">C</span>ompiler
-      </Link>
-      <div className="hidden lg:flex space-x-20 text-lg">
-        <Link href="/about">Features</Link>
-        <Link href="/docs">Flow</Link>
-        <Link href="/blog">Github</Link>
-        <Link href="/docs">Docs</Link>
-      </div>
-      <Button className="max-lg:hidden rounded">Code Now</Button>
-      <Button variant="ghost" className="lg:hidden">
-        <MenuIcon className="size-10" />
-      </Button>
-    </div>
-  );
-}
-
 export default function Home() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative">
       <Navbar />
       <Hero />
       <Features />
@@ -115,7 +95,7 @@ function FeatureCard({
   return (
     <div className="gr5 p-0.5 rounded-md max-w-[560px]">
       <div className="gr6 rounded-md flex gap-2 p-4">
-        <Icon className="h-12 w-12" strokeWidth={1} />
+        <Icon className="h-12 w-12 shrink-0 text-foreground2" strokeWidth={1} />
         <div className="flex flex-col gap-1">
           <h4 className="font-bold">{title}</h4>
           <p className="text-foreground2 leading-[1]">{description}</p>
@@ -241,11 +221,11 @@ function Languages() {
         {LANGUAGES_CTA.map((lang) => (
           <div
             key={lang.icon}
-            className="border-primary/40 gr8 border rounded-lg p-4 relative overflow-hidden"
+            className="border-primary/40 gr8 border rounded-lg p-4 relative overflow-hidden isolate"
           >
-            <div className="gr9 w-[170px] h-[140px] absolute -left-[21px] -top-[15px] rotate-[5deg]" />
-            <div className="gr2 w-[404px] h-[394px] absolute -right-[136px] -top-[152px]" />
-            <div className="gr2 w-[382px] h-[126px] absolute -left-[159px] -bottom-[52px]" />
+            <div className="gr9 w-[170px] h-[140px] absolute -left-[21px] -top-[15px] rotate-[5deg] -z-10" />
+            <div className="gr2 w-[404px] h-[394px] absolute -right-[136px] -top-[152px] -z-10" />
+            <div className="gr2 w-[382px] h-[126px] absolute -left-[159px] -bottom-[52px] -z-10" />
             <img src={lang.icon} alt="" className="w-[80px]" />
             <div className="mt-6">
               <h3 className="font-bold text-2xl">{lang.title}</h3>
@@ -269,12 +249,15 @@ function Languages() {
 
 function Footer() {
   return (
-    <footer className="mx-auto w-full py-10 max-w-screen-xl flex justify-between mt-20">
-      <Link href="/" className="font-bold text-xl">
+    <footer className="mx-auto p-3 md:p-6  w-full py-10  max-w-screen-xl flex justify-between mt-20">
+      <Link href="/" className="font-bold text-lg md:text-xl">
         Code Compiler
       </Link>
-      <Link href="" className="inline-flex items-center gap-2">
-        <StarIcon className="size-6" />
+      <Link
+        href=""
+        className="inline-flex items-center gap-2 text-xs md:text-sm"
+      >
+        <StarIcon className="size-4 md:size-5" strokeWidth={1} />
         <span>Star us on github</span>
       </Link>
     </footer>
