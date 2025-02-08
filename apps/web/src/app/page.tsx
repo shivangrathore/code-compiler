@@ -158,11 +158,11 @@ function Flow() {
   return (
     <div className="flex flex-col items-center mt-60 my-40 p-3 md:p-6">
       <Heading text="Flow" />
-      <div className="grid grid-cols-2 grid-rows-2 w-full max-w-screen-xl mt-20 gap-8">
+      <div className="grid [grid-auto-rows:1fr] w-full max-w-screen-xl mt-20 gap-8">
         {/* Step 1: Write your code */}
-        <div className="border border-primary flex rounded-2xl flex-col p-10 col-span-2 bg-[#0D011C] relative overflow-hidden">
+        <div className="border border-primary flex rounded-2xl flex-col p-10 row-span-2 md:row-span-1 col-span-2 bg-[#0D011C] relative overflow-hidden">
           <div className="gr7 absolute w-[913px] h-[889px] -left-[197px] -top-[354px] pointer-events-none" />
-          <div className="flex gap-20">
+          <div className="flex gap-20 flex-col md:flex-row">
             <div className="flex flex-col items-start gap-6">
               <span className="text-foreground2 font-semibold">Step 1</span>
               <h3 className="text-8xl font-extrabold leading-[100%] mt-6">
@@ -175,17 +175,17 @@ function Flow() {
               <Button size="lg">Code Now</Button>
             </div>
             <div className="relative w-[825px] h-[440px]">
-              <div className="absolute">
+              <div className="absolute w-[900px] h-[400px] md:h-[520px] lg:h-[540px]">
                 <div className="gr7 w-[913px] h-[890px] right-[-409px] bottom-[-247px] absolute z-10 pointer-events-none" />
                 <img
                   src="example-input.png"
                   alt=""
-                  className="rounded-3xl border-primary/40 border h-full pointer-events-none"
+                  className="rounded-3xl border-primary/40 border pointer-events-none h-full absolute"
                 />
                 <img
                   src="example-output.png"
                   alt=""
-                  className="rounded-3xl border-purple-800/40 shadow-[0_0_10px_4px] shadow-black/40 border absolute left-40 -top-20 pointer-events-none"
+                  className="rounded-3xl border-purple-800/40 shadow-[0_0_10px_4px] shadow-black/40 border absolute left-40 -top-20 pointer-events-none h-full"
                 />
               </div>
             </div>
@@ -193,12 +193,17 @@ function Flow() {
         </div>
 
         {/* Step 2: Select a Language */}
-        <div className="border border-primary flex rounded-2xl flex-col p-10 bg-[#0D011C] relative overflow-hidden gap-4 isolate">
+        <div className="border border-primary max-[900px]:col-span-2 flex rounded-2xl flex-col p-10 bg-[#0D011C] relative overflow-hidden gap-4 isolate">
           <div className="gr7 w-[913px] h-[889px] -left-[353px] -bottom-[200px] absolute -z-10" />
           <div className="gr7 w-[913px] h-[889px] -right-[412px] -bottom-[289px] absolute -z-10" />
           <span className="text-foreground2 font-semibold">Step 2</span>
           <span className="font-bold text-2xl">Select a Language</span>
-          <img src="languages-graph.png" className="my-auto" />
+          <div className="relative h-full w-full flex items-center">
+            <img
+              src="languages-graph.png"
+              className="w-full max-w-[400px] mx-auto"
+            />
+          </div>
           <span className="text-gray-400">
             Select your preferred programming language from our list. We support
             Python, JavaScript, C, and more!
@@ -206,12 +211,17 @@ function Flow() {
         </div>
 
         {/* Step 3: Compile your code */}
-        <div className="border border-primary flex rounded-2xl flex-col p-10 bg-[#0D011C] relative overflow-hidden gap-4 isolate">
+        <div className="border border-primary max-[900px]:col-span-2 flex rounded-2xl flex-col p-10 bg-[#0D011C] relative overflow-hidden gap-4 isolate">
           <div className="gr7 w-[913px] h-[889px] -left-[353px] -bottom-[200px] absolute -z-10" />
           <div className="gr7 w-[913px] h-[889px] -right-[412px] -bottom-[289px] absolute -z-10" />
           <span className="text-foreground2 font-semibold">Step 3</span>
           <span className="font-bold text-2xl">Run & Get Output</span>
-          <img src="run-button.png" className="w-[1200px] my-auto shrink-0" />
+          <div className="relative my-auto w-full h-full">
+            <img
+              src="run-button.png"
+              className="w-[600px] max-w-none absolute left-1/2 -translate-x-1/2 top-20"
+            />
+          </div>
           <span className="text-gray-400">
             Click Run to execute your code instantly. See real-time output in
             the console.
@@ -227,7 +237,7 @@ function Languages() {
     <div className="flex flex-col max-w-screen-xl mx-auto w-full items-center relative p-3 md:p-6">
       <div className="gr2 absolute w-[1100px] h-[1000px] -right-1/4 -top-full" />
       <Heading text="Languages" />
-      <div className="grid grid-cols-4 mt-20 gap-4 w-full">
+      <div className="grid sm:grid-cols-2 xl:grid-cols-4 mt-20 gap-4 w-full">
         {LANGUAGES_CTA.map((lang) => (
           <div
             key={lang.icon}
