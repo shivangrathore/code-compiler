@@ -15,7 +15,7 @@ body {
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 214, 89%, 44%;
+    --primary: 214 89% 44%;
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
@@ -55,6 +55,27 @@ body {
   }
 
 
+  .gr5 {
+    background: linear-gradient(1deg, #251CA0 -9.37%, #0E2C63 81.16%, #999 148.87%);
+  }
+
+  .gr6 {
+    background: linear-gradient(90deg, #181414 0%, #0D011C 100%);
+  }
+
+  .gr7 {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(11, 49, 94, 0.60) 0%, rgba(43, 2, 60, 0.00) 100%);
+  }
+
+  .gr8 {
+    background: linear-gradient(180deg, #010027 0%, #010F21 53.5%, #010027 100%);
+  }
+
+  .gr9 {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(14, 73, 115, 0.30) 0%, rgba(18, 24, 140, 0.00) 100%);
+  }
+
+
   /* Pill */
   .pill-r {
     border-radius: 10px;
@@ -65,10 +86,6 @@ body {
   }
 
 
-  .pill-border {
-    background: linear-gradient(1deg, #251CA0 -9.37%, #0E2C63 81.16%, #999 148.87%);
-    padding: 2px;
-  }
 
   .pill-gr {
     background: linear-gradient(90deg, #0A131A 0%, #010C1E 100%);
