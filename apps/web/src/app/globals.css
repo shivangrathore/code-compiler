@@ -100,7 +100,8 @@ body {
   }
 
   body {
-    @apply gr1 text-foreground bg-fixed;
+    background: linear-gradient(#0B061A, #111016);
+    @apply text-foreground bg-fixed bg-cover;
   }
 }
 

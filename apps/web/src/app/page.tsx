@@ -1,14 +1,9 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { FEATURES, HERO_PILLS, LANGUAGES_CTA } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import {
-  ChevronRight,
-  GaugeIcon,
-  LucideIcon,
-  MenuIcon,
-  StarIcon,
-} from "lucide-react";
+import { ChevronRight, LucideIcon, MenuIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
+import React from "react";
 
 export function Navbar() {
   return (
@@ -70,11 +65,8 @@ function Hero() {
         </div>
         <div className="hidden lg:block space-y-16">
           {HERO_PILLS.map(({ icon: Icon, text, className }, index) => (
-            <>
-              <div
-                className={cn("gr5 p-0.5 w-fit pill-r", className)}
-                key={text}
-              >
+            <React.Fragment key={text}>
+              <div className={cn("gr5 p-0.5 w-fit pill-r", className)}>
                 <div className="pill-bg pill-r">
                   <div className="pill-gr p-[16px] pill-r flex gap-2 items-center">
                     <Icon className="size-6" />
@@ -90,7 +82,7 @@ function Hero() {
                   )}
                 />
               )}
-            </>
+            </React.Fragment>
           ))}
         </div>
       </div>
@@ -135,10 +127,10 @@ function FeatureCard({
 
 function Features() {
   return (
-    <div className="flex flex-col items-center mt-40 relative max-w-screen-xl mx-auto overflow-visible">
+    <div className="flex flex-col items-center mt-40 relative max-w-screen-xl mx-auto overflow-visible w-full p-3 md:p-6">
       <div className="gr2 -z-10 -left-[256px] top-[-245px] w-[1418px] h-[1287px] absolute" />
       <Heading text="Features" />
-      <div className="flex gap-16 items-center mt-20">
+      <div className="flex flex-col-reverse lg:flex-row gap-16 items-center mt-20">
         <div className="flex flex-col gap-4 h-fit">
           {FEATURES.map(({ icon, title, description }) => (
             <FeatureCard
@@ -149,8 +141,8 @@ function Features() {
             />
           ))}
         </div>
-        <div className="relative h-[540px] w-[852px]">
-          <div className="absolute h-[540px] w-[1280px] flex items-center rounded-3xl overflow-hidden border-primary/40 border-2 p-4">
+        <div className="relative w-full h-[400px] md:w-[600px] lg:h-[540px] xl:w-[852px]">
+          <div className="absolute h-[400px] lg:h-[540px] w-[1280px] flex items-center rounded-3xl overflow-hidden border-primary/40 border-2 p-4 max-lg:left-0">
             <img
               src="features-screenshot.png"
               className="w-full h-full object-cover object-left-top"
@@ -164,7 +156,7 @@ function Features() {
 
 function Flow() {
   return (
-    <div className="flex flex-col items-center mt-60 my-40">
+    <div className="flex flex-col items-center mt-60 my-40 p-3 md:p-6">
       <Heading text="Flow" />
       <div className="grid grid-cols-2 grid-rows-2 w-full max-w-screen-xl mt-20 gap-8">
         {/* Step 1: Write your code */}
@@ -232,10 +224,10 @@ function Flow() {
 
 function Languages() {
   return (
-    <div className="flex flex-col max-w-screen-xl mx-auto w-full items-center relative">
+    <div className="flex flex-col max-w-screen-xl mx-auto w-full items-center relative p-3 md:p-6">
       <div className="gr2 absolute w-[1100px] h-[1000px] -right-1/4 -top-full" />
       <Heading text="Languages" />
-      <div className="grid grid-cols-4 mt-20 gap-4">
+      <div className="grid grid-cols-4 mt-20 gap-4 w-full">
         {LANGUAGES_CTA.map((lang) => (
           <div
             key={lang.icon}
