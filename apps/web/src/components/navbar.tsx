@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { MenuIcon } from "lucide-react";
+import { motion } from "motion/react";
 
 export function Navbar() {
   const [hasScrolled, setHasScrolled] = React.useState(false);
@@ -20,11 +21,15 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   });
   return (
-    <header
+    <motion.header
       className={cn(
         "sticky top-0 z-50 transition-colors duration-300",
         hasScrolled && "bg-background/60 backdrop-blur-sm",
       )}
+      initial={{ opacity: 0, y: "-100%" }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3 }}
     >
       <div
         className={cn(
@@ -47,6 +52,6 @@ export function Navbar() {
           <MenuIcon className="size-10" />
         </Button>
       </div>
-    </header>
+    </motion.header>
   );
 }
