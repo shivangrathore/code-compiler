@@ -5,13 +5,19 @@ import { Job, JobState } from "@repo/types";
 import React from "react";
 
 type CompilerProviderProps = {
+  vimEnabled: boolean;
+  vimMode: "normal" | "insert" | "visual";
   lang: Lang;
   code: string;
   output: string;
-  state: string;
+  state: JobState;
+  fontSize: number;
+  setVimEnabled: (value: boolean) => void;
+  setVimMode: (mode: "normal" | "insert" | "visual") => void;
   setCode: (value: string) => void;
   setLang: (lang: Lang) => void;
   runCode: () => void;
+  setFontSize: (size: number) => void;
 };
 
 const Context = React.createContext<CompilerProviderProps | undefined>(
@@ -24,7 +30,12 @@ export default function CompilerProvider({
   const [lang, setLang] = React.useState<Lang>("python");
   const [code, setCode] = React.useState<string>("");
   const [output, setOutput] = React.useState<string>("");
-  const [state, setState] = React.useState<JobState | "idle">("idle");
+  const [state, setState] = React.useState<JobState>("done");
+  const [fontSize, setFontSize] = React.useState(16);
+  const [vimEnabled, setVimEnabled] = React.useState(false);
+  const [vimMode, setVimMode] = React.useState<"normal" | "insert" | "visual">(
+    "normal",
+  );
   React.useEffect(() => {
     if (lang === "javascript") {
       setCode("console.log('hello world!');");
@@ -33,7 +44,7 @@ export default function CompilerProvider({
     }
   }, [lang]);
   const pollOutput = async (id: string) => {
-    setState("idle");
+    setState("queued");
     setOutput("");
     while (true) {
       console.log("Polling Output");
@@ -57,7 +68,21 @@ export default function CompilerProvider({
   };
   return (
     <Context.Provider
-      value={{ lang, setLang, code, setCode, runCode, output, state }}
+      value={{
+        lang,
+        vimMode,
+        setVimMode,
+        setLang,
+        code,
+        setCode,
+        runCode,
+        output,
+        state,
+        fontSize,
+        setFontSize,
+        vimEnabled,
+        setVimEnabled,
+      }}
     >
       {children}
     </Context.Provider>

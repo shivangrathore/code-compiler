@@ -6,6 +6,8 @@ import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
 import { useCompiler } from "@/providers/compiler.provider";
 import { tokyoNightInit } from "@uiw/codemirror-theme-tokyo-night";
+import { vim } from "@replit/codemirror-vim";
+import { EditorView } from "@codemirror/view";
 
 const languages = {
   javascript: javascript,
@@ -13,9 +15,10 @@ const languages = {
 };
 
 function Editor() {
-  const { code, setCode, lang } = useCompiler();
+  const { code, setCode, lang, fontSize, vimEnabled, setVimMode } =
+    useCompiler();
   const onChange = React.useCallback(
-    (val: string, viewUpdate: ViewUpdate) => {
+    (val: string, _viewUpdate: ViewUpdate) => {
       setCode(val);
     },
     [setCode],
@@ -24,8 +27,17 @@ function Editor() {
 
   return (
     <CodeMirror
-      theme={tokyoNightInit({ settings: { fontFamily: "JetBrains Mono" } })}
-      extensions={[language()]}
+      theme={tokyoNightInit({
+        settings: { fontFamily: "JetBrains Mono", fontSize: `${fontSize}px` },
+      })}
+      extensions={[
+        language(),
+        vimEnabled ? vim() : [],
+        EditorView.updateListener.of((update) => {
+          // @ts-ignore
+          setVimMode(update.view.cm?.state?.vim?.mode || "normal");
+        }),
+      ]}
       value={code}
       onChange={onChange}
       className="flex flex-row flex-grow"

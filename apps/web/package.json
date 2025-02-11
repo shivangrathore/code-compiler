@@ -11,10 +11,13 @@
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-python": "^6.1.7",
+    "@codemirror/view": "^6.36.2",
     "@hookform/resolvers": "^3.10.0",
+    "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-select": "^2.1.5",
     "@radix-ui/react-slot": "^1.1.1",
+    "@replit/codemirror-vim": "^6.2.1",
     "@repo/types": "workspace:*",
     "@tanstack/react-query": "^5.66.0",
     "@uiw/codemirror-theme-tokyo-night": "^4.23.8",
