@@ -33,6 +33,9 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --editor-background: #1a1b26;
+    /*--editor-background: #0c0719;*/
+    --editor-foreground: #d7d7d7;
   }
 }
 

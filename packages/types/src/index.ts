@@ -10,6 +10,8 @@ export type Job =
       exitCode: number;
     };
 
+export type JobState = Job["state"];
+
 export type QueueJob = {
   id: string;
   code: string;

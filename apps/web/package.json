@@ -17,6 +17,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@repo/types": "workspace:*",
     "@tanstack/react-query": "^5.66.0",
+    "@uiw/codemirror-theme-tokyo-night": "^4.23.8",
     "@uiw/react-codemirror": "^4.23.8",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",

@@ -14,7 +14,7 @@ import Link from "next/link";
 export default function Topbar() {
   const { runCode, lang, setLang } = useCompiler();
   return (
-    <div className="flex items-center justify-between p-4 bg-white text-black shadow shadow-black/25 relative z-50">
+    <div className="flex items-center justify-between p-4 bg-editor-background text-editor-foreground text-black shadow shadow-black/25 relative z-50 shadow shadow-black/40">
       <Link href="/" className="text-xl font-bold">
         Code Compiler
       </Link>

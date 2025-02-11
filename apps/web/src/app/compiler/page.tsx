@@ -7,14 +7,14 @@ import Topbar from "./topbar";
 
 export default function CompilerPage() {
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex h-screen flex-col ">
       <CompilerProvider>
         <Topbar />
         <PanelGroup direction="horizontal" className="flex flex-grow">
           <Panel className="flex flex-grow">
             <Editor />
           </Panel>
-          <PanelResizeHandle className="h-full w-1 bg-black" />
+          <PanelResizeHandle className="h-full w-0.5 bg-white/20" />
           <Panel className="flex flex-grow">
             <Output />
           </Panel>

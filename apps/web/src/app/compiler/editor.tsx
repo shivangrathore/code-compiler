@@ -5,6 +5,7 @@ import CodeMirror, { ViewUpdate } from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
 import { useCompiler } from "@/providers/compiler.provider";
+import { tokyoNightInit } from "@uiw/codemirror-theme-tokyo-night";
 
 const languages = {
   javascript: javascript,
@@ -23,10 +24,11 @@ function Editor() {
 
   return (
     <CodeMirror
+      theme={tokyoNightInit({ settings: { fontFamily: "JetBrains Mono" } })}
       extensions={[language()]}
       value={code}
       onChange={onChange}
-      className="text-black flex flex-row flex-grow"
+      className="flex flex-row flex-grow"
     />
   );
 }

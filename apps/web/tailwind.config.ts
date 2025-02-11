@@ -11,6 +11,8 @@ export default {
   theme: {
     extend: {
       colors: {
+        "editor-background": "var(--editor-background)",
+        "editor-foreground": "var(--editor-foreground)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         foreground2: "hsl(var(--foreground2))",

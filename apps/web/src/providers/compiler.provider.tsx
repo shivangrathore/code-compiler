@@ -1,7 +1,7 @@
 "use client";
 import httpClient from "@/lib/http-client";
 import { Lang } from "@repo/types/zod";
-import { Job } from "@repo/types";
+import { Job, JobState } from "@repo/types";
 import React from "react";
 
 type CompilerProviderProps = {
@@ -24,9 +24,7 @@ export default function CompilerProvider({
   const [lang, setLang] = React.useState<Lang>("python");
   const [code, setCode] = React.useState<string>("");
   const [output, setOutput] = React.useState<string>("");
-  const [state, setState] = React.useState<
-    "idle" | "queue" | "running" | "finished" | "timeout"
-  >("idle");
+  const [state, setState] = React.useState<JobState | "idle">("idle");
   React.useEffect(() => {
     if (lang === "javascript") {
       setCode("console.log('hello world!');");
@@ -41,16 +39,12 @@ export default function CompilerProvider({
       console.log("Polling Output");
       const res = await httpClient.get(`/runner/poll?id=${id}`);
       const data = res.data as Job;
+      setState(data.state);
       if (data.state == "done") {
         setOutput(data.result);
-        setState("finished");
         break;
-      } else if (data.state == "running") {
-        setState("running");
-      } else if (data.state == "queued") {
-        setState("queue");
       } else if (data.state == "timeout") {
-        setState("timeout");
+        setOutput("Job timed out");
         break;
       }
       await new Promise((resolve) => setTimeout(resolve, 400));
