@@ -13,14 +13,19 @@ async function worker() {
 
   const job = JSON.parse(_job) as QueueJob;
   console.log(`Processing job: ${job.id}`);
-  const process = spawn("docker", [
-    "run",
-    "--rm",
-    "node:latest",
-    "node",
-    "-e",
-    job.code,
-  ]);
+  await redis.hset(
+    "executor:jobs",
+    job.id,
+    JSON.stringify({ state: "running" } as Job),
+  );
+  const command = ["run", "--rm"];
+  if (job.lang == "javascript") {
+    command.push("node:latest", "node", "-e", job.code);
+  } else {
+    command.push("python:latest", "python", "-c", job.code);
+  }
+
+  const process = spawn("docker", command);
   process.stdout.setEncoding("utf8");
   try {
     const { result, exitCode } = await new Promise<{
@@ -28,7 +33,7 @@ async function worker() {
       exitCode: number;
     }>(async (resolve, reject) => {
       const jobTimeout = setTimeout(() => {
-        reject(new Error("Timeout"));
+        reject(new TimeoutError("Timeout"));
       }, 5000);
       const lines: string[] = [];
       process.stdout.on("data", (data) => {
@@ -50,6 +55,7 @@ async function worker() {
     console.log("Got output:", result);
   } catch (e) {
     if (e instanceof TimeoutError) {
+      console.log("Job timed out");
       await redis.hset(
         "executor:jobs",
         job.id,

@@ -2,7 +2,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { MenuIcon } from "lucide-react";
 import { motion } from "motion/react";
 
@@ -47,7 +47,12 @@ export function Navbar() {
           <Link href="/blog">Github</Link>
           <Link href="/docs">Docs</Link>
         </div>
-        <Button className="max-lg:hidden rounded">Code Now</Button>
+        <Link
+          href="/compiler"
+          className={buttonVariants({ className: "max-lg:hidden rounded" })}
+        >
+          Code Now
+        </Link>
         <Button variant="ghost" className="lg:hidden">
           <MenuIcon className="size-10" />
         </Button>

@@ -6,7 +6,6 @@ import { ChevronRight, LucideIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import * as motion from "motion/react-client";
-import { MotionProps } from "motion/react";
 
 export default function Home() {
   return (

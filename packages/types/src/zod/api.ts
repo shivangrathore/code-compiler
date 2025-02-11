@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const Lang = z.enum(["js", "py"]);
+export const Lang = z.enum(["javascript", "python"]);
 
 export const RunCode = z.object({
   code: z.string(),

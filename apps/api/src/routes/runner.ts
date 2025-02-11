@@ -39,16 +39,16 @@ router.get("/poll", async (req, res) => {
   res.header("Cache-Control", "no-store");
   switch (job.state) {
     case "queued":
-      res.status(202).json({ status: "queued" });
+      res.status(202).json({ state: "queued" });
       break;
     case "running":
-      res.status(202).json({ status: "running" });
+      res.status(202).json({ state: "running" });
       break;
     case "timeout":
-      res.json({ status: "timeout" });
+      res.json({ state: "timeout" });
       break;
     case "done":
-      res.json({ status: "done", result: job.result });
+      res.json({ state: "done", result: job.result });
       break;
     default:
       res.status(500).json();
