@@ -4,6 +4,8 @@ import React from "react";
 import CodeMirror, { ViewUpdate } from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
+import { cpp } from "@codemirror/lang-cpp";
+import { java } from "@codemirror/lang-java";
 import { useCompiler } from "@/providers/compiler.provider";
 import { tokyoNightInit } from "@uiw/codemirror-theme-tokyo-night";
 import { vim } from "@replit/codemirror-vim";
@@ -12,6 +14,8 @@ import { EditorView } from "@codemirror/view";
 const languages = {
   javascript: javascript,
   python: python,
+  c: cpp,
+  java: java,
 };
 
 function Editor() {

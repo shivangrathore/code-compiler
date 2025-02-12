@@ -31,7 +31,7 @@ export default function Topbar() {
     vimMode,
   } = useCompiler();
   return (
-    <div className="flex items-center justify-between p-4 bg-editor-background text-editor-foreground text-black shadow shadow-black/25 relative z-50 shadow shadow-black/40">
+    <div className="flex items-center justify-between p-4 bg-editor-background text-editor-foreground text-black relative z-50 shadow shadow-black/40">
       <Link href="/" className="text-xl font-bold">
         Code Compiler
       </Link>
@@ -44,6 +44,8 @@ export default function Topbar() {
           <SelectContent>
             <SelectItem value="python">Python</SelectItem>
             <SelectItem value="javascript">Javascript</SelectItem>
+            <SelectItem value="c">C</SelectItem>
+            <SelectItem value="java">Java</SelectItem>
           </SelectContent>
         </Select>
         <Dialog>

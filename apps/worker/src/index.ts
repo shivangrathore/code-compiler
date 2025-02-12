@@ -19,11 +19,8 @@ async function worker() {
     JSON.stringify({ state: "running" } as Job),
   );
   const command = ["run", "--rm"];
-  if (job.lang == "javascript") {
-    command.push("node:latest", "node", "-e", job.code);
-  } else {
-    command.push("python:latest", "python", "-c", job.code);
-  }
+
+  command.push(`${job.lang}-runner`, job.code);
 
   const process = spawn("docker", command);
   process.stdout.setEncoding("utf8");

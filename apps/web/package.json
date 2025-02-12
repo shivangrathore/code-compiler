@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codemirror/lang-cpp": "^6.0.2",
+    "@codemirror/lang-java": "^6.0.1",
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-python": "^6.1.7",
     "@codemirror/view": "^6.36.2",
@@ -20,6 +22,7 @@
     "@replit/codemirror-vim": "^6.2.1",
     "@repo/types": "workspace:*",
     "@tanstack/react-query": "^5.66.0",
+    "@uidotdev/usehooks": "^2.4.1",
     "@uiw/codemirror-theme-tokyo-night": "^4.23.8",
     "@uiw/react-codemirror": "^4.23.8",
     "axios": "^1.7.9",

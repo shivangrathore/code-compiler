@@ -8,17 +8,18 @@ import {
 import React, { ReactNode } from "react";
 
 const StateIndicator = ({ state }: { state: string }) => {
-  const stateMap: Record<string, { icon: ReactNode; label: string }> = {
-    queued: {
-      icon: <CircleEllipsisIcon aria-hidden="true" />,
-      label: "Queued",
-    },
-    running: {
-      icon: <Loader2Icon className="animate-spin" aria-hidden="true" />,
-      label: "Running",
-    },
-    done: { icon: <CheckIcon aria-hidden="true" />, label: "Done" },
-    timeout: { icon: <ClockIcon aria-hidden="true" />, label: "Timeout" },
+  const stateMap: Record<string, ReactNode> = {
+    queued: (
+      <CircleEllipsisIcon aria-hidden="true" className="text-yellow-500" />
+    ),
+    running: (
+      <Loader2Icon
+        className="animate-spin text-yellow-500"
+        aria-hidden="true"
+      />
+    ),
+    done: <CheckIcon aria-hidden="true" className="text-green-500" />,
+    timeout: <ClockIcon aria-hidden="true" className="text-red-500" />,
   };
 
   const currentState = stateMap[state];
@@ -27,12 +28,7 @@ const StateIndicator = ({ state }: { state: string }) => {
     return null;
   }
 
-  return (
-    <div className="flex items-center gap-2">
-      <span className="capitalize">{currentState.label}</span>
-      {currentState.icon}
-    </div>
-  );
+  return <div className="flex items-center gap-2">{currentState}</div>;
 };
 
 const Output = () => {
