@@ -2,6 +2,7 @@ import { useCompiler } from "@/providers/compiler.provider";
 import {
   CheckIcon,
   CircleEllipsisIcon,
+  CircleX,
   ClockIcon,
   Loader2Icon,
 } from "lucide-react";
@@ -20,6 +21,7 @@ const StateIndicator = ({ state }: { state: string }) => {
     ),
     done: <CheckIcon aria-hidden="true" className="text-green-500" />,
     timeout: <ClockIcon aria-hidden="true" className="text-red-500" />,
+    error: <CircleX aria-hidden="true" className="text-red-500" />,
   };
 
   const currentState = stateMap[state];

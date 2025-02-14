@@ -4,6 +4,8 @@ import { Job, QueueJob } from "@repo/types";
 import { v4 as uuidv4 } from "uuid";
 import redis from "@repo/redis/client";
 
+// TODO: Implement zod validation for the request body for api routes
+
 export const router: Router = Router();
 router.post("/execute", async (req, res) => {
   const body = await RunCode.parseAsync(req.body);
@@ -26,6 +28,22 @@ router.post("/execute", async (req, res) => {
   );
   multi.exec();
   res.send({ id });
+});
+
+router.post("/stop", async (req, res) => {
+  const id = req.body.id as string;
+  const _job = await redis.hget("executor:jobs", id);
+  if (!_job) {
+    res.status(404).json();
+    return;
+  }
+  const job = JSON.parse(_job) as Job;
+  if (job.state === "queued") {
+    res.status(400).json({ error: "Task is not in queue" });
+    return;
+  }
+  await redis.hdel("executor:jobs", id);
+  res.json();
 });
 
 router.get("/poll", async (req, res) => {

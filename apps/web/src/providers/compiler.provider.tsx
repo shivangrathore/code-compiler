@@ -6,6 +6,8 @@ import React from "react";
 import { useLocalStorage } from "@uidotdev/usehooks";
 import { useRouter, useSearchParams } from "next/navigation";
 
+// TODO: Implement redux or reducer pattern
+
 type CompilerProviderProps = {
   vimEnabled: boolean;
   vimMode: "normal" | "insert" | "visual";
@@ -14,17 +16,26 @@ type CompilerProviderProps = {
   output: string;
   state: JobState;
   fontSize: number;
+  canStop: boolean;
   setVimEnabled: (value: boolean) => void;
   setVimMode: (mode: "normal" | "insert" | "visual") => void;
   setCode: (value: string) => void;
   setLang: (lang: Lang) => void;
   runCode: () => void;
+  stopExecution: () => void;
   setFontSize: (size: number) => void;
 };
 
 const Context = React.createContext<CompilerProviderProps | undefined>(
   undefined,
 );
+
+const defaultCode = {
+  python: "print('hello world!')",
+  javascript: "console.log('hello world!');",
+  c: '#include <stdio.h>\n\nint main() {\n  printf("Hello, World!\\n");\n  return 0;\n}',
+  java: 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}',
+};
 
 export default function CompilerProvider({
   children,
@@ -40,6 +51,9 @@ export default function CompilerProvider({
   const [vimMode, setVimMode] = React.useState<"normal" | "insert" | "visual">(
     "normal",
   );
+  const [taskId, setTaskId] = React.useState<string | null>(null);
+  const isPolling = React.useRef(false);
+  const [canStop, setCanStop] = React.useState(false);
 
   function setLang(lang: Lang) {
     const newPathname = "/compiler?" + new URLSearchParams({ lang }).toString();
@@ -51,24 +65,13 @@ export default function CompilerProvider({
     if (code) {
       return;
     }
-    if (lang === "javascript") {
-      setCode("console.log('hello world!');");
-    } else if (lang === "python") {
-      setCode("print('hello world!')");
-    } else if (lang == "c") {
-      setCode(
-        '#include <stdio.h>\n\nint main() {\n  printf("Hello, World!\\n");\n  return 0;\n}',
-      );
-    } else if (lang == "java") {
-      setCode(
-        'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}',
-      );
-    }
+    setCode(defaultCode[lang]);
   }, [lang]);
   const pollOutput = async (id: string) => {
+    isPolling.current = true;
     setState("queued");
     setOutput("");
-    while (true) {
+    while (isPolling.current) {
       const res = await httpClient.get(`/runner/poll?id=${id}`);
       const data = res.data as Job;
       setState(data.state);
@@ -79,24 +82,43 @@ export default function CompilerProvider({
         setOutput("Job timed out");
         break;
       }
-      await new Promise((resolve) => setTimeout(resolve, 400));
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
   };
 
   const runCode = async () => {
     const res = await httpClient.post("/runner/execute", { lang, code });
-    await pollOutput(res.data.id);
+    const _taskId = res.data.id;
+    setTaskId(_taskId);
+    setCanStop(true);
+    await pollOutput(_taskId);
+  };
+
+  const stopExecution = async () => {
+    try {
+      isPolling.current = false;
+      const res = await httpClient.post("/runner/stop", { id: taskId });
+      console.log(res.status);
+      setOutput("Execution stopped");
+      setState("error");
+      setTaskId(null);
+    } catch (e) {
+      setCanStop(false);
+      await pollOutput(taskId!);
+    }
   };
   return (
     <Context.Provider
       value={{
         lang,
+        canStop,
         vimMode,
         setVimMode,
         setLang,
         code,
         setCode,
         runCode,
+        stopExecution,
         output,
         state,
         fontSize,
