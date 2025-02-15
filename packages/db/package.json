@@ -10,7 +10,8 @@
   },
   "scripts": {
     "dev": "tsc -w",
-    "build": "tsc"
+    "build": "tsc",
+    "db:generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "6.3.0",
