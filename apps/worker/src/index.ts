@@ -7,7 +7,6 @@ class TimeoutError extends Error {}
 async function worker() {
   const _job = await redis.rpop("executor:queue");
   if (!_job) {
-    console.log("No job found, waiting for 1 second");
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return;
   }
@@ -49,10 +48,8 @@ async function worker() {
       job.id,
       JSON.stringify({ state: "done", result, exitCode } as Job),
     );
-    console.log("Got output:", result);
   } catch (e) {
     if (e instanceof TimeoutError) {
-      console.log("Job timed out");
       await redis.hset(
         "executor:jobs",
         job.id,
