@@ -17,9 +17,16 @@ async function worker() {
     job.id,
     JSON.stringify({ state: "running" } as Job),
   );
-  const command = ["run", "--rm", "--runtime=runsc"];
-
-  command.push(`${job.lang}-runner`, job.code);
+  const command = [
+    "run",
+    "--rm",
+    "--cpus=0.5",
+    "--memory=128m",
+    "--runtime=runsc",
+    `${job.lang}-runner`,
+    job.code,
+  ];
+  console.log("Running command:", ["docker", ...command].join(" "));
 
   const process = spawn("docker", command);
   process.stdout.setEncoding("utf8");
@@ -30,10 +37,17 @@ async function worker() {
     }>(async (resolve, reject) => {
       const jobTimeout = setTimeout(() => {
         reject(new TimeoutError("Timeout"));
-      }, 5000);
+      }, 10000);
       const lines: string[] = [];
       process.stdout.on("data", (data) => {
         lines.push(data);
+      });
+      process.on("error", (err) => {
+        console.error(`Failed to start subprocess: ${err}`);
+      });
+
+      process.on("close", (code) => {
+        console.log(`Process exited with code ${code}`);
       });
       process.on("exit", async (exitCode) => {
         clearTimeout(jobTimeout);
