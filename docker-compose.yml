@@ -15,8 +15,6 @@ services:
         condition: service_healthy
       db:
         condition: service_healthy
-
-
   api:
     build: 
       context: .
@@ -32,9 +30,6 @@ services:
         condition: service_healthy
       db:
         condition: service_healthy
-    ports:
-      - "5000:5000"
-
   db:
     image: postgres
     ports:
