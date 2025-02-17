@@ -28,7 +28,7 @@ type CompilerProviderProps = {
 };
 
 const Context = React.createContext<CompilerProviderProps | undefined>(
-  undefined,
+  undefined
 );
 
 const defaultCode = {
@@ -38,7 +38,7 @@ const defaultCode = {
   java: 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}',
 };
 
-function Wrapper({ children }: React.PropsWithChildren<{}>) {
+function Wrapper({ children }: React.PropsWithChildren) {
   const params = useSearchParams();
   const router = useRouter();
   const lang = Lang.parse(params.get("lang") || "python");
@@ -48,7 +48,7 @@ function Wrapper({ children }: React.PropsWithChildren<{}>) {
   const [fontSize, setFontSize] = useLocalStorage("fontSize", 16);
   const [vimEnabled, setVimEnabled] = useLocalStorage("vimEnabled", false);
   const [vimMode, setVimMode] = React.useState<"normal" | "insert" | "visual">(
-    "normal",
+    "normal"
   );
   const [taskId, setTaskId] = React.useState<string | null>(null);
   const isPolling = React.useRef(false);
