@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc",
-    "db:generate": "prisma generate"
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push"
   },
   "dependencies": {
     "@prisma/client": "6.3.0",

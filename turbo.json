@@ -26,6 +26,7 @@
       "cache": false,
       "persistent": true
     },
-    "db:generate": {}
+    "db:generate": {},
+    "db:push": {}
   }
 }

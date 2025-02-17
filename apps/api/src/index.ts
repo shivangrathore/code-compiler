@@ -5,11 +5,13 @@ import cors from "cors";
 import { router as apiRouter } from "./routes";
 
 const app = express();
-app.options("*", cors());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://cc.seekhcode.me"],
+  })
+);
 
-// Mount auth router before the JSON parser
-app.use("/api/auth", authHandler);
+app.all("/api/auth/*", authHandler);
 
 app.use(express.json());
 app.use("/api", apiRouter);

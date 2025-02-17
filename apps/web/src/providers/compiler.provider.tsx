@@ -3,8 +3,9 @@ import httpClient from "@/lib/http-client";
 import { Lang } from "@repo/types/zod";
 import { Job, JobState } from "@repo/types";
 import React from "react";
-import { useLocalStorage } from "@uidotdev/usehooks";
+import { useIsClient, useLocalStorage } from "@uidotdev/usehooks";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 // TODO: Implement redux or reducer pattern
 
@@ -37,9 +38,7 @@ const defaultCode = {
   java: 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}',
 };
 
-export default function CompilerProvider({
-  children,
-}: React.PropsWithChildren) {
+function Wrapper({ children }: React.PropsWithChildren<{}>) {
   const params = useSearchParams();
   const router = useRouter();
   const lang = Lang.parse(params.get("lang") || "python");
@@ -130,6 +129,21 @@ export default function CompilerProvider({
       {children}
     </Context.Provider>
   );
+}
+
+export default function CompilerProvider({
+  children,
+}: React.PropsWithChildren) {
+  const isClient = useIsClient();
+  if (!isClient) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-editor-background">
+        <Loader2 className="animate-spin size-10" />
+      </div>
+    );
+  }
+
+  return <Wrapper>{children}</Wrapper>;
 }
 
 export function useCompiler() {

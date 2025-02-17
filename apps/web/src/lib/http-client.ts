@@ -1,4 +1,6 @@
 import axios from "axios";
 
-export default axios.create({ baseURL: "https://cc.seekhcode.me/api" });
-// export default axios.create({ baseURL: "http://localhost:3000/api" });
+console.log(process.env.NEXT_PUBLIC_URL);
+const BASE_URL = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+
+export default axios.create({ baseURL: new URL("/api", BASE_URL).toString() });

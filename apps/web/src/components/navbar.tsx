@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import { MenuIcon } from "lucide-react";
 import { motion } from "motion/react";
+import { authClient } from "@/lib/auth-client";
 
 export function Navbar() {
   const [hasScrolled, setHasScrolled] = React.useState(false);
@@ -47,12 +48,24 @@ export function Navbar() {
           <Link href="/blog">Github</Link>
           <Link href="/docs">Docs</Link>
         </div>
-        <Link
-          href="/compiler"
-          className={buttonVariants({ className: "max-lg:hidden rounded" })}
-        >
-          Code Now
-        </Link>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={() =>
+              authClient.signIn.social({
+                provider: "google",
+                callbackURL: "http://localhost:3000/compiler",
+              })
+            }
+          >
+            Login
+          </Button>
+          <Link
+            href="/compiler"
+            className={buttonVariants({ className: "max-lg:hidden rounded" })}
+          >
+            Code Now
+          </Link>
+        </div>
         <Button variant="ghost" className="lg:hidden">
           <MenuIcon className="size-10" />
         </Button>
