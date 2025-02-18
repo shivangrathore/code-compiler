@@ -6,6 +6,7 @@ import redis from "@repo/redis/client";
 import db from "@repo/db/client";
 
 // TODO: Implement zod validation for the request body for api routes
+// TODO: Makes these endpoint typesafe
 
 export const router: Router = Router();
 router.post("/execute", async (req, res) => {
@@ -55,19 +56,24 @@ router.get("/poll", async (req, res) => {
     return;
   }
   const job = JSON.parse(_job) as Job;
+  let newJob: Job;
   res.header("Cache-Control", "no-store");
   switch (job.state) {
     case "queued":
-      res.status(202).json({ state: "queued" });
+      newJob = { state: "queued" };
+      res.status(202).json(newJob);
       break;
     case "running":
-      res.status(202).json({ state: "running" });
+      newJob = { state: "running" };
+      res.status(202).json(newJob);
       break;
     case "timeout":
-      res.json({ state: "timeout" });
+      newJob = { state: "timeout" };
+      res.json(newJob);
       break;
     case "done":
-      res.json({ state: "done", result: job.result });
+      newJob = { state: "done", result: job.result, exitCode: job.exitCode };
+      res.json(newJob);
       break;
     default:
       res.status(500).json();
