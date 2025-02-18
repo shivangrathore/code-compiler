@@ -43,17 +43,11 @@ export function Navbar() {
           ode <span className="text-primary">C</span>ompiler
         </Link>
         <div className="hidden lg:flex space-x-20 text-lg">
-          <Link href="/about">Features</Link>
-          <Link href="/docs">Flow</Link>
-          <Link href="/blog">Github</Link>
-          <Link href="/docs">Docs</Link>
+          <Link href="/#features">Features</Link>
+          <Link href="/#flow">Flow</Link>
+          <Link href="https://github.com/Wiper-R/code-compiler">Github</Link>
         </div>
         <div className="flex items-center gap-2">
-          <Button
-            onClick={() => authClient.signIn.social({ provider: "google" })}
-          >
-            Login
-          </Button>
           <Link
             href="/compiler"
             className={buttonVariants({ className: "max-lg:hidden rounded" })}

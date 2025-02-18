@@ -1,8 +1,9 @@
 import express from "express";
-import { handler as authHandler } from "@repo/auth";
 import "dotenv/config";
 import cors from "cors";
 import { router as apiRouter } from "./routes";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "@repo/auth";
 
 const app = express();
 app.use(
@@ -11,7 +12,7 @@ app.use(
   }),
 );
 
-app.all("/api/auth/*", authHandler);
+app.all("/api/auth/*", toNodeHandler(auth));
 
 app.use(express.json());
 app.use("/api", apiRouter);

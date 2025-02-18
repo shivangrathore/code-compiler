@@ -5,23 +5,19 @@ import db from "@repo/db/client";
 
 class TimeoutError extends Error {}
 
-function handleTimeout(process: ChildProcess, reject: (e: Error) => void) {
-  process.disconnect();
-  process.kill();
-  reject(new TimeoutError("Timeout"));
-}
+type JobResult = QueueJob & { state: "done" | "timeout" };
 
-async function worker(): Promise<Job | null> {
-  const _job = await redis.rpop("executor:queue");
-  if (!_job) {
+async function worker(): Promise<JobResult | null> {
+  const queueJobRaw = await redis.rpop("executor:queue");
+  if (!queueJobRaw) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return null;
   }
 
-  const job = JSON.parse(_job) as QueueJob;
+  const queueJob = JSON.parse(queueJobRaw) as QueueJob;
   await redis.hset(
     "executor:jobs",
-    job.id,
+    queueJob.id,
     JSON.stringify({ state: "running" } as Job),
   );
   const command = [
@@ -30,8 +26,8 @@ async function worker(): Promise<Job | null> {
     "--cpus=0.5",
     "--memory=128m",
     "--runtime=runsc",
-    `${job.lang}-runner`,
-    job.code,
+    `${queueJob.lang}-runner`,
+    queueJob.code,
   ];
   console.log("Running command:", ["docker", ...command].join(" "));
 
@@ -43,8 +39,7 @@ async function worker(): Promise<Job | null> {
       exitCode: number;
     }>(async (resolve, reject) => {
       const jobTimeout = setTimeout(() => {
-        process.kill();
-        process.disconnect();
+        process.kill(9);
         reject(new TimeoutError("Timeout"));
       }, 10000);
       const lines: string[] = [];
@@ -62,27 +57,47 @@ async function worker(): Promise<Job | null> {
         });
       });
     });
-    const newJob = { state: "done", result, exitCode } as Job;
+    const newJob: Job = { state: "done", result, exitCode };
     console.log("Result", result, exitCode);
-    await redis.hset("executor:jobs", job.id, JSON.stringify(newJob));
-    return newJob;
+    await redis.hset("executor:jobs", queueJob.id, JSON.stringify(newJob));
+    return { ...queueJob, state: "done" };
   } catch (e) {
     if (e instanceof TimeoutError) {
-      const newJob = { state: "timeout" } as Job;
-      await redis.hset("executor:jobs", job.id, JSON.stringify(newJob));
-      return newJob;
-    } else {
-      const newJob = { state: "error" } as Job;
-      await redis.hset("executor:jobs", job.id, JSON.stringify(newJob));
-      return newJob;
+      const newJob: Job = { state: "timeout" };
+      await redis.hset("executor:jobs", queueJob.id, JSON.stringify(newJob));
+      return { ...queueJob, state: "timeout" };
     }
+    console.log("Error", e);
+    return null;
   }
 }
 
 async function main() {
   while (true) {
     try {
-      await worker();
+      const job = await worker();
+      if (!job) {
+        continue;
+      }
+      await db.executionHistory.create({
+        data: {
+          lang: job.lang,
+          userId: job.userId,
+          state: job.state,
+        },
+      });
+      await db.executionStats.upsert({
+        where: { lang: job.lang },
+        create: {
+          lang: job.lang,
+          count: 1,
+        },
+        update: {
+          count: {
+            increment: 1,
+          },
+        },
+      });
     } catch (e) {
       console.error(e);
     }

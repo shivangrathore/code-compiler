@@ -2,7 +2,7 @@ import { Lang } from "./zod";
 
 export type Job =
   | {
-      state: "running" | "timeout" | "queued" | "error";
+      state: "running" | "timeout" | "queued";
     }
   | {
       state: "done";
@@ -16,4 +16,5 @@ export type QueueJob = {
   id: string;
   code: string;
   lang: Lang;
+  userId: string;
 };

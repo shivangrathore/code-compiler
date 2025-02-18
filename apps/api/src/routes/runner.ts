@@ -3,7 +3,8 @@ import { RunCode } from "@repo/types/zod";
 import { Job, QueueJob } from "@repo/types";
 import { v4 as uuidv4 } from "uuid";
 import redis from "@repo/redis/client";
-import db from "@repo/db/client";
+import { auth } from "@repo/auth";
+import { fromNodeHeaders } from "better-auth/node";
 
 // TODO: Implement zod validation for the request body for api routes
 // TODO: Makes these endpoint typesafe
@@ -12,6 +13,13 @@ export const router: Router = Router();
 router.post("/execute", async (req, res) => {
   const body = await RunCode.parseAsync(req.body);
   const id = uuidv4();
+  const session = await auth.api.getSession({
+    headers: fromNodeHeaders(req.headers),
+  });
+  if (!session || !session.user) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
   const multi = redis.multi();
   multi.hset(
     "executor:jobs",
@@ -26,6 +34,7 @@ router.post("/execute", async (req, res) => {
       id: id,
       code: body.code,
       lang: body.lang,
+      userId: session.user.id,
     } as QueueJob),
   );
   multi.exec();

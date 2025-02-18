@@ -1,11 +1,12 @@
 import { Navbar } from "@/components/navbar";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { FEATURES, HERO_PILLS, LANGUAGES_CTA } from "@/lib/constants";
+import { FEATURES, LANGUAGES_CTA } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { ChevronRight, LucideIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import * as motion from "motion/react-client";
+import HeroPills from "@/components/hero-pills";
 
 export default function Home() {
   return (
@@ -34,22 +35,6 @@ function Hero() {
   const childVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0 },
-    transition: { duration: 0.3 },
-  };
-
-  const pillContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-      },
-    },
-  };
-
-  const pillVariants = {
-    hidden: { opacity: 0, x: 400 },
-    visible: { opacity: 1, x: 0 },
     transition: { duration: 0.3 },
   };
 
@@ -91,37 +76,7 @@ function Hero() {
             <Button variant="outline">View on Github</Button>
           </motion.div>
         </motion.div>
-        <motion.div
-          className="hidden lg:block space-y-16"
-          variants={pillContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {HERO_PILLS.map(({ icon: Icon, text, className }, index) => (
-            <React.Fragment key={text}>
-              <motion.div
-                className={cn("gr5 p-0.5 w-fit pill-r", className)}
-                variants={pillVariants}
-              >
-                <div className="pill-bg pill-r">
-                  <div className="pill-gr p-[16px] pill-r flex gap-2 items-center">
-                    <Icon className="size-6" />
-                    <span>{text}</span>
-                  </div>
-                </div>
-              </motion.div>
-              {index < HERO_PILLS.length - 1 && (
-                <div
-                  className={cn(
-                    "gr4 h-px w-[400px] -translate-x-[40px]",
-                    className,
-                  )}
-                />
-              )}
-            </React.Fragment>
-          ))}
-        </motion.div>
+        <HeroPills />
       </div>
     </div>
   );

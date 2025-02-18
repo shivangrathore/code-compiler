@@ -106,7 +106,7 @@ export default function CompilerProvider({
       const res = await httpClient.post("/runner/stop", { id: taskId });
       console.log(res.status);
       setOutput("Execution stopped");
-      setState("error");
+      setExitCode(1);
       setTaskId(null);
     } catch (e) {
       setCanStop(false);

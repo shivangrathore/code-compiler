@@ -24,28 +24,26 @@ model User {
 }
 
 model ExecutionHistory {
-  id        String         @id
-  code      String?
+  id        String         @id @default(uuid())
   lang      Lang
-  createdAt DateTime?
+  createdAt DateTime       @default(now())
   user      User           @relation(fields: [userId], references: [id])
   userId    String
-  state     ExecutionState @default(completed)
+  state     ExecutionState
 
   @@map("execution_history")
 }
 
 model ExecutionStats {
-  lang           String @id // Language
-  completedCount Int    @default(0)
+  lang  String @id // Language
+  count Int    @default(0)
 
   @@map("execution_stats")
 }
 
 enum ExecutionState {
-  completed
+  done
   timeout
-  error
 }
 
 model LangCount {

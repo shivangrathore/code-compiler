@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@repo/auth": "workspace:*",
-    "@repo/redis": "workspace:*",
     "@repo/db": "workspace:*",
+    "@repo/redis": "workspace:*",
+    "better-auth": "^1.1.15",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
