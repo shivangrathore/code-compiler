@@ -1,4 +1,13 @@
 services:
+  web:
+    build: 
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+    networks:
+      - code-compiler-network
+    environment:
+      - NEXT_PUBLIC_URL=http://cc.seekhcode.me
+      - API_URL=http://api.cc.seekhcode.me
   worker:
     build: 
       context: .
