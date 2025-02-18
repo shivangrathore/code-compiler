@@ -32,8 +32,6 @@ services:
         condition: service_healthy
   db:
     image: postgres
-    ports:
-      - "5432:5432"
     networks:
       - code-compiler-network
     environment:
@@ -50,8 +48,6 @@ services:
     image: redis
     networks:
       - code-compiler-network
-    ports:
-      - "6379:6379"
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping"]
       interval: 5s

@@ -8,7 +8,7 @@ const app = express();
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://cc.seekhcode.me"],
-  })
+  }),
 );
 
 app.all("/api/auth/*", authHandler);

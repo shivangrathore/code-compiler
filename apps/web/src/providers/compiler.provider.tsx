@@ -2,10 +2,11 @@
 import httpClient from "@/lib/http-client";
 import { Lang } from "@repo/types/zod";
 import { Job, JobState } from "@repo/types";
-import React from "react";
+import React, { useEffect } from "react";
 import { useIsClient, useLocalStorage } from "@uidotdev/usehooks";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 // TODO: Implement redux or reducer pattern
 
@@ -18,6 +19,7 @@ type CompilerProviderProps = {
   state: JobState;
   fontSize: number;
   canStop: boolean;
+  exitCode: number | null;
   setVimEnabled: (value: boolean) => void;
   setVimMode: (mode: "normal" | "insert" | "visual") => void;
   setCode: (value: string) => void;
@@ -28,7 +30,7 @@ type CompilerProviderProps = {
 };
 
 const Context = React.createContext<CompilerProviderProps | undefined>(
-  undefined
+  undefined,
 );
 
 const defaultCode = {
@@ -38,7 +40,9 @@ const defaultCode = {
   java: 'public class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}',
 };
 
-function Wrapper({ children }: React.PropsWithChildren) {
+export default function CompilerProvider({
+  children,
+}: React.PropsWithChildren) {
   const params = useSearchParams();
   const router = useRouter();
   const lang = Lang.parse(params.get("lang") || "python");
@@ -48,11 +52,12 @@ function Wrapper({ children }: React.PropsWithChildren) {
   const [fontSize, setFontSize] = useLocalStorage("fontSize", 16);
   const [vimEnabled, setVimEnabled] = useLocalStorage("vimEnabled", false);
   const [vimMode, setVimMode] = React.useState<"normal" | "insert" | "visual">(
-    "normal"
+    "normal",
   );
   const [taskId, setTaskId] = React.useState<string | null>(null);
   const isPolling = React.useRef(false);
   const [canStop, setCanStop] = React.useState(false);
+  const [exitCode, setExitCode] = React.useState<number | null>(null);
 
   function setLang(lang: Lang) {
     const newPathname = "/compiler?" + new URLSearchParams({ lang }).toString();
@@ -76,6 +81,7 @@ function Wrapper({ children }: React.PropsWithChildren) {
       setState(data.state);
       if (data.state == "done") {
         setOutput(data.result);
+        setExitCode(data.exitCode);
         break;
       } else if (data.state == "timeout") {
         setOutput("Job timed out");
@@ -90,6 +96,7 @@ function Wrapper({ children }: React.PropsWithChildren) {
     const _taskId = res.data.id;
     setTaskId(_taskId);
     setCanStop(true);
+    setExitCode(null);
     await pollOutput(_taskId);
   };
 
@@ -114,6 +121,7 @@ function Wrapper({ children }: React.PropsWithChildren) {
         vimMode,
         setVimMode,
         setLang,
+        exitCode,
         code,
         setCode,
         runCode,
@@ -129,21 +137,6 @@ function Wrapper({ children }: React.PropsWithChildren) {
       {children}
     </Context.Provider>
   );
-}
-
-export default function CompilerProvider({
-  children,
-}: React.PropsWithChildren) {
-  const isClient = useIsClient();
-  if (!isClient) {
-    return (
-      <div className="h-screen w-screen flex items-center justify-center bg-editor-background">
-        <Loader2 className="animate-spin size-10" />
-      </div>
-    );
-  }
-
-  return <Wrapper>{children}</Wrapper>;
 }
 
 export function useCompiler() {

@@ -8,18 +8,56 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
+  id               String             @id
+  name             String
+  email            String
+  emailVerified    Boolean
+  image            String?
+  createdAt        DateTime
+  updatedAt        DateTime
+  sessions         Session[]
+  accounts         Account[]
+  executionHistory ExecutionHistory[]
 
   @@unique([email])
   @@map("user")
+}
+
+model ExecutionHistory {
+  id        String         @id
+  code      String?
+  lang      Lang
+  createdAt DateTime?
+  user      User           @relation(fields: [userId], references: [id])
+  userId    String
+  state     ExecutionState @default(completed)
+
+  @@map("execution_history")
+}
+
+model ExecutionStats {
+  lang           String @id // Language
+  completedCount Int    @default(0)
+
+  @@map("execution_stats")
+}
+
+enum ExecutionState {
+  completed
+  timeout
+  error
+}
+
+model LangCount {
+  id    String @id
+  count Int    @default(0)
+}
+
+enum Lang {
+  python
+  javascript
+  java
+  c
 }
 
 model Session {

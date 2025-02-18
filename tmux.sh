@@ -3,7 +3,7 @@ S="cc"
 tmux new-session -s $S -d -n nvim
 tmux send-keys -t $S:nvim 'nvim' Enter
 
-tmux new-window -t $S -n commands
+tmux new-window -t $S -d -n commands
 
 tmux new-window -t $S -n run
 tmux send-keys -t $S:run 'pnpm dev' Enter

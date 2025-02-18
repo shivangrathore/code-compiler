@@ -8,7 +8,8 @@ import {
 } from "lucide-react";
 import React, { ReactNode } from "react";
 
-const StateIndicator = ({ state }: { state: string }) => {
+const StateIndicator = () => {
+  const { state, exitCode } = useCompiler();
   const stateMap: Record<string, ReactNode> = {
     queued: (
       <CircleEllipsisIcon aria-hidden="true" className="text-yellow-500" />
@@ -24,7 +25,13 @@ const StateIndicator = ({ state }: { state: string }) => {
     error: <CircleX aria-hidden="true" className="text-red-500" />,
   };
 
-  const currentState = stateMap[state];
+  let currentState = null;
+
+  if (state == "done" && exitCode !== 0) {
+    currentState = stateMap["error"];
+  } else {
+    currentState = stateMap[state];
+  }
 
   if (!currentState) {
     return null;
@@ -34,13 +41,13 @@ const StateIndicator = ({ state }: { state: string }) => {
 };
 
 const Output = () => {
-  const { output, state } = useCompiler();
+  const { output } = useCompiler();
 
   return (
     <div className="flex-grow overflow-auto bg-editor-background text-editor-foreground">
       <div className="flex justify-between items-center p-4 shadow shadow-black/40">
         <h5 className="font-bold">Output</h5>
-        <StateIndicator state={state} />
+        <StateIndicator />
       </div>
       <pre className="p-2">{output}</pre>
     </div>

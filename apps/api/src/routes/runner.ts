@@ -3,6 +3,7 @@ import { RunCode } from "@repo/types/zod";
 import { Job, QueueJob } from "@repo/types";
 import { v4 as uuidv4 } from "uuid";
 import redis from "@repo/redis/client";
+import db from "@repo/db/client";
 
 // TODO: Implement zod validation for the request body for api routes
 

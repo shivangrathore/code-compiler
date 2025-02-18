@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@repo/redis": "workspace:*",
-    "@repo/types": "workspace:*"
+    "@repo/types": "workspace:*",
+    "@repo/db": "workspace:*"
   },
   "devDependencies": {
     "@repo/types": "workspace:*",

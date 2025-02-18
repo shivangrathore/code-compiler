@@ -4,9 +4,29 @@ import Editor from "./editor";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import Output from "./output";
 import Topbar from "./topbar";
-import { Suspense } from "react";
+import { Suspense, useEffect, useRef } from "react";
+import { authClient } from "@/lib/auth-client";
+import { useIsClient } from "@uidotdev/usehooks";
+import { Loader2 } from "lucide-react";
 
 export default function CompilerPage() {
+  const isClient = useIsClient();
+  const { data, isPending } = authClient.useSession();
+  const user = data?.user;
+  const isRedirecting = useRef(false);
+  useEffect(() => {
+    if (!user && !isPending && !isRedirecting.current) {
+      authClient.signIn.social({ provider: "google" });
+      isRedirecting.current = true;
+    }
+  }, [user, isPending]);
+  if (!isClient || isPending || !user) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-editor-background">
+        <Loader2 className="animate-spin size-10" />
+      </div>
+    );
+  }
   return (
     <div className="flex h-screen flex-col ">
       <Suspense>
