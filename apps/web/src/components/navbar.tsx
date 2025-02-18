@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import { MenuIcon } from "lucide-react";
 import { motion } from "motion/react";
+import { authClient } from "@/lib/auth-client";
 
 export function Navbar() {
   const [hasScrolled, setHasScrolled] = React.useState(false);
@@ -24,7 +25,7 @@ export function Navbar() {
     <motion.header
       className={cn(
         "sticky top-0 z-50 transition-colors duration-300",
-        hasScrolled && "bg-background/60 backdrop-blur-sm"
+        hasScrolled && "bg-background/60 backdrop-blur-sm",
       )}
       initial={{ opacity: 0, y: "-100%" }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -34,7 +35,7 @@ export function Navbar() {
       <div
         className={cn(
           "flex justify-between p-3 md:p-6 items-center max-w-screen-xl mx-auto w-full transition-all duration-300",
-          hasScrolled && "py-0.5 md:py-2"
+          hasScrolled && "py-0.5 md:py-2",
         )}
       >
         <Link href="/" className="text-2xl font-bold">
@@ -48,6 +49,11 @@ export function Navbar() {
           <Link href="/docs">Docs</Link>
         </div>
         <div className="flex items-center gap-2">
+          <Button
+            onClick={() => authClient.signIn.social({ provider: "google" })}
+          >
+            Login
+          </Button>
           <Link
             href="/compiler"
             className={buttonVariants({ className: "max-lg:hidden rounded" })}
