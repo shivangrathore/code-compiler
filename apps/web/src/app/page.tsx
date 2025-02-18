@@ -190,11 +190,11 @@ function Features() {
             delay: 0.2,
           }}
         >
-          <div className="absolute h-[400px] lg:h-[540px] w-[1280px] flex items-center rounded-3xl overflow-hidden border-primary/40 border-2 p-4 max-lg:left-0">
+          <div className="absolute h-[400px] lg:h-[540px] w-[880px] flex items-center rounded-3xl overflow-hidden border-primary/40 border-2 p-1 max-lg:left-0">
             <img
               src="features-screenshot.png"
-              className="w-full h-full object-cover object-left-top"
-              alt="Features Screenshot"
+              className="w-full h-full object-cover object-left-top rounded-[inherit]"
+              alt="Features Screenshot "
             />
           </div>
         </motion.div>
@@ -265,12 +265,12 @@ function Flow() {
               <div className="absolute w-[900px] h-[400px] md:h-[520px] lg:h-[540px]">
                 <div className="gr7 w-[913px] h-[890px] right-[-409px] bottom-[-247px] absolute z-10 pointer-events-none" />
                 <img
-                  src="example-input.png"
+                  src="example-output.png"
                   alt="Example Input"
                   className="rounded-3xl border-primary/40 border pointer-events-none h-full absolute"
                 />
                 <img
-                  src="example-output.png"
+                  src="example-input.png"
                   alt="Example Output"
                   className="rounded-3xl border-purple-800/40 shadow-[0_0_10px_4px] shadow-black/40 border absolute left-40 -top-20 pointer-events-none h-full"
                 />
