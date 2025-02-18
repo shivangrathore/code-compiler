@@ -27,7 +27,7 @@ const StateIndicator = () => {
 
   let currentState = null;
 
-  if (state == "done" && exitCode !== 0) {
+  if (state == "done" && exitCode !== 0 && exitCode !== null) {
     currentState = stateMap["error"];
   } else {
     currentState = stateMap[state];

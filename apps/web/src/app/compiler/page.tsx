@@ -16,7 +16,10 @@ export default function CompilerPage() {
   const isRedirecting = useRef(false);
   useEffect(() => {
     if (!user && !isPending && !isRedirecting.current) {
-      authClient.signIn.social({ provider: "google" });
+      authClient.signIn.social({
+        provider: "google",
+        callbackURL: new URL("/compiler", window.location.href).toString(),
+      });
       isRedirecting.current = true;
     }
   }, [user, isPending]);
