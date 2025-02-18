@@ -23,4 +23,10 @@ export const auth = betterAuth({
   },
   database: prismaAdapter(db, { provider: "postgresql" }),
   trustedOrigins: ["http://localhost:3000", "https://cc.seekhcode.me"],
+  advanced: {
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: ".cc.seekhcode.me",
+    },
+  },
 });
