@@ -6,6 +6,7 @@ services:
     environment: 
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
     networks:
       - code-compiler-network
     volumes:
@@ -16,6 +17,7 @@ services:
       db:
         condition: service_healthy
   api:
+    env_file: .env
     build: 
       context: .
       dockerfile: ./apps/api/Dockerfile

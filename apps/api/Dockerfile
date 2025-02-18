@@ -24,4 +24,4 @@ FROM base AS runner
 WORKDIR /app
 COPY --from=installer /app .
 WORKDIR /app/apps/api
-CMD ["npm", "run", "start"]
+CMD ["/bin/sh", "-c", "./start.sh"]
