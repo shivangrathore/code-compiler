@@ -72,8 +72,15 @@ function Hero() {
             on the web.
           </motion.p>
           <motion.div className="flex gap-4" variants={childVariants}>
-            <Button>Compile Now</Button>
-            <Button variant="outline">View on Github</Button>
+            <Link href="/compiler" className={buttonVariants()}>
+              Compile Now
+            </Link>
+            <Link
+              href="https://github.com/Wiper-R/code-compiler"
+              className={buttonVariants({ variant: "outline" })}
+            >
+              View on Github
+            </Link>
           </motion.div>
         </motion.div>
         <HeroPills />
@@ -392,7 +399,7 @@ function Footer() {
         Code Compiler
       </Link>
       <Link
-        href=""
+        href="https://github.com/Wiper-R/code-compiler"
         className="inline-flex items-center gap-2 text-xs md:text-sm"
       >
         <StarIcon className="size-4 md:size-5" strokeWidth={1} />
