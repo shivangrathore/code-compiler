@@ -10,7 +10,7 @@ import HeroPills from "@/components/hero-pills";
 
 export default function Home() {
   return (
-    <div className="flex flex-col relative">
+    <div className="flex flex-col relative" id="main">
       <Navbar />
       <Hero />
       <Features />
@@ -158,7 +158,10 @@ function Features() {
   };
 
   return (
-    <div className="flex flex-col items-center mt-40 relative max-w-screen-xl mx-auto overflow-visible w-full p-3 md:p-6">
+    <div
+      className="flex flex-col items-center mt-20 relative max-w-screen-xl mx-auto overflow-visible w-full p-3 md:p-6 !pt-20"
+      id="features"
+    >
       <div className="gr2 -z-10 -left-[256px] top-[-245px] w-[1418px] h-[1287px] absolute" />
       <Heading text="Features" />
       <div className="flex flex-col-reverse lg:flex-row gap-16 items-center mt-20">
@@ -231,7 +234,10 @@ function Flow() {
     visible: { opacity: 1, x: 0, scale: 1 },
   };
   return (
-    <div className="flex flex-col items-center mt-60 my-40 p-3 md:p-6">
+    <div
+      className="flex flex-col items-center mt-40 my-40 p-3 md:p-6 !pt-20"
+      id="flow"
+    >
       <Heading text="Flow" />
       <motion.div
         className="grid [grid-auto-rows:1fr] w-full max-w-screen-xl mt-20 gap-8"
@@ -352,7 +358,10 @@ function Languages() {
   };
 
   return (
-    <div className="flex flex-col max-w-screen-xl mx-auto w-full items-center relative p-3 md:p-6">
+    <div
+      className="flex flex-col max-w-screen-xl mx-auto w-full items-center relative p-3 md:p-6 !pt-20"
+      id="languages"
+    >
       <div className="gr2 absolute w-[1100px] h-[1000px] -right-1/4 -top-full" />
       <Heading text="Languages" />
       <motion.div

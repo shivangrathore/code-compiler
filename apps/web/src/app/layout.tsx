@@ -33,7 +33,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.className} antialiased dark overflow-x-hidden relative max-h-screen`}
+        className={`${inter.className} antialiased dark overflow-x-hidden relative max-h-screen scroll-smooth`}
       >
         <QueryProvider>{children}</QueryProvider>
       </body>

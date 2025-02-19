@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
 import { MenuIcon } from "lucide-react";
 import { motion } from "motion/react";
-import { authClient } from "@/lib/auth-client";
 
 export function Navbar() {
   const [hasScrolled, setHasScrolled] = React.useState(false);
@@ -45,6 +44,7 @@ export function Navbar() {
         <div className="hidden lg:flex space-x-20 text-lg">
           <Link href="/#features">Features</Link>
           <Link href="/#flow">Flow</Link>
+          <Link href="/#languages">Languages</Link>
           <Link href="https://github.com/Wiper-R/code-compiler">Github</Link>
         </div>
         <div className="flex items-center gap-2">
