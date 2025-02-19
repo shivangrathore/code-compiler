@@ -10,7 +10,7 @@ import HeroPills from "@/components/hero-pills";
 
 export default function Home() {
   return (
-    <div className="flex flex-col relative" id="main">
+    <div className="flex flex-col relative">
       <Navbar />
       <Hero />
       <Features />
@@ -159,7 +159,7 @@ function Features() {
 
   return (
     <div
-      className="flex flex-col items-center mt-20 relative max-w-screen-xl mx-auto overflow-visible w-full p-3 md:p-6 !pt-20"
+      className="flex flex-col items-center mt-40 relative max-w-screen-xl mx-auto overflow-visible w-full p-3 md:p-6"
       id="features"
     >
       <div className="gr2 -z-10 -left-[256px] top-[-245px] w-[1418px] h-[1287px] absolute" />
@@ -235,7 +235,7 @@ function Flow() {
   };
   return (
     <div
-      className="flex flex-col items-center mt-40 my-40 p-3 md:p-6 !pt-20"
+      className="flex flex-col items-center mt-60 my-40 p-3 md:p-6"
       id="flow"
     >
       <Heading text="Flow" />
@@ -359,7 +359,7 @@ function Languages() {
 
   return (
     <div
-      className="flex flex-col max-w-screen-xl mx-auto w-full items-center relative p-3 md:p-6 !pt-20"
+      className="flex flex-col max-w-screen-xl mx-auto w-full items-center relative p-3 md:p-6"
       id="languages"
     >
       <div className="gr2 absolute w-[1100px] h-[1000px] -right-1/4 -top-full" />
