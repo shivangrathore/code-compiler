@@ -37,6 +37,8 @@ Check out the live version here: [Live Compiler](https://cc.seekhcode.me)
 - **Supported Languages:** Python, Javascript, C, Java
 
 
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -66,6 +68,16 @@ pnpm dev
 ```
 
 Visit `http://localhost:3000` to start coding!
+
+## 🔒 Privacy & Telemetry
+
+We collect basic telemetry data to improve the compiler and understand usage trends. This includes:
+
+- The number of snippets compiled
+
+- The most frequently used programming languages
+
+No personal or sensitive data is stored. The collected data helps us optimize performance and prioritize language support. If you have concerns, feel free to reach out or check the source code for transparency.
 
 ## 🤝 Contributing
 
