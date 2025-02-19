@@ -48,18 +48,23 @@ export function Navbar() {
           }
         }}
         className={cn(
-          "z-[999] fixed inset-0 flex flex-col bg-black/80 backdrop-blur-md",
+          "z-[999] fixed inset-0 flex flex-col gr1 backdrop-blur-md",
           isOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
         id="mobile-navbar"
       >
+        <div className="absolute gr2 w-[1038px] h-[993px] pointer-events-none -z-10" />
         <div
           className={cn(
             "flex justify-between p-3 items-center max-w-screen-xl mx-auto w-full",
             hasScrolled && "py-0.5",
           )}
         >
-          <Link href="/" className="text-2xl font-bold text-white">
+          <Link
+            href="/"
+            className="text-2xl font-bold text-white"
+            onClick={() => setIsOpen(false)}
+          >
             Code Compiler
           </Link>
           <Button
@@ -72,16 +77,22 @@ export function Navbar() {
         </div>
 
         {/* Links */}
-        <div className="flex flex-col items-center justify-center my-auto gap-6 text-white text-2xl font-semibold">
-          {LINKS.map((link) => (
-            <Link
-              href={link.href}
-              key={link.href}
-              onClick={() => setIsOpen(false)}
-            >
-              {link.text}
-            </Link>
-          ))}
+        <div className="flex flex-col justify-center my-auto gap-6 text-white text-2xl font-semibold relative">
+          <div className="absolute -z-10 opacity-40">
+            <img src="/Lines.png" />
+          </div>
+          <div className="flex flex-col gap-4 ml-10">
+            {LINKS.map((link) => (
+              <Link
+                href={link.href}
+                key={link.href}
+                onClick={() => setIsOpen(false)}
+                className="text-3xl font-bold"
+              >
+                {link.text}
+              </Link>
+            ))}
+          </div>
         </div>
       </motion.div>
       <motion.header
