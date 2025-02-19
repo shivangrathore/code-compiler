@@ -1,19 +1,3 @@
-# Code Compiler
-Code compiler is a web application that allows users to compile and run code in multiple languages. The application supports the following languages:
-- C
-- Java
-- Python
-- JavaScript
-
-
-## Live Demo
-[Code Compiler](https://cc.seekhcode.me/)
-
-## Technologies
-- Frontend: Next.js
-- Backend: Express.js
-- Database: PostgreSQL
-- Docker
 # 🚀 Full-Stack Code Compiler
 
 A blazing-fast online code compiler supporting multiple languages, built with Next.js, Express, and WebSockets. Execute code in real-time with a smooth developer experience.
