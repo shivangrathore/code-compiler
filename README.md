@@ -33,6 +33,8 @@ Check out the live version here: [Live Compiler](https://cc.seekhcode.me)
 - **Memory Limit:** 128MB
 - **CPU Limit:** 0.5 CPU
 - **Execution Timeout:** 10 seconds
+- **Number of Workers:** 1
+- **Supported Languages:** Python, Javascript, C, Java
 
 
 ## 🚀 Getting Started
