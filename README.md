@@ -1,6 +1,6 @@
 # 🚀 Full-Stack Code Compiler
 
-A blazing-fast online code compiler supporting multiple languages, built with Next.js, Express, and WebSockets. Execute code in real-time with a smooth developer experience.
+A blazing-fast online code compiler supporting multiple languages, built with Next.js, Express, and Redis. Execute code in real-time with a smooth developer experience.
 
 ## 🌟 Features
 
@@ -8,14 +8,13 @@ A blazing-fast online code compiler supporting multiple languages, built with Ne
 - ⚡ **Instant Execution** – Optimized for low-latency code execution.
 - 🌐 **Web-Based** – No installation required, just open and start coding.
 - 🔐 **Secure Execution** – Sandboxed environment to ensure safe code execution.
-- 📜 **Syntax Highlighting** – Integrated with Monaco Editor for a smooth coding experience.
-- 📡 **WebSockets Powered** – Live feedback and instant execution results.
+- 📜 **Syntax Highlighting** – Integrated with Code Mirror Editor for a smooth coding experience.
 - 🤓 **Supports Vim Mode** - Supports vim mode, so nerds can use it.
 
 
 ## 🌍 Live Demo
 
-Check out the live version here: [Live Compiler](https://your-live-compiler-url.com)
+Check out the live version here: [Live Compiler](https://cc.seekhcode.me)
 
 > ⚠️ **Note:** The hosted version may not be blazingly fast due to VPS limitations (I'm running this on a budget 😅). Expect occasional delays in execution times.
 
@@ -23,9 +22,18 @@ Check out the live version here: [Live Compiler](https://your-live-compiler-url.
 ## 🛠️ Tech Stack
 
 - **Frontend:** Next.js, React, Code Mirror Editor
-- **Backend:** Express.js, WebSockets
-- **Database:** Prisma (if applicable)
+- **Backend:** Express.js, Docker
+- **Database:** Prisma, Redis
 - **Execution Engine:** Dockerized runtime
+- **Deployment:** Vercel (Frontend), VPS (Backend)
+- **Mono-Repo Management:** Turborepo
+
+## 🧾 Execution Details
+
+- **Memory Limit:** 128MB
+- **CPU Limit:** 0.5 CPU
+- **Execution Timeout:** 10 seconds
+
 
 ## 🚀 Getting Started
 
