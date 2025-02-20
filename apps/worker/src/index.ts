@@ -1,11 +1,13 @@
 import redis from "@repo/redis/client";
 import { Job, QueueJob } from "@repo/types";
-import { ChildProcess, spawn } from "child_process";
+import { spawn } from "child_process";
 import db from "@repo/db/client";
 
 class TimeoutError extends Error {}
 
 type JobResult = QueueJob & { state: "done" | "timeout" };
+
+const MAX_CHARACTERS_LIMIT = 1000;
 
 async function worker(): Promise<JobResult | null> {
   const queueJobRaw = await redis.rpop("executor:queue");
@@ -43,16 +45,23 @@ async function worker(): Promise<JobResult | null> {
         reject(new TimeoutError("Timeout"));
       }, 10000);
       const lines: string[] = [];
+      var characters: number = 0;
       process.stdout.on("data", (data) => {
         lines.push(data);
+        characters += data.length;
+        console.log(characters);
+        if (characters > MAX_CHARACTERS_LIMIT) {
+          process.kill(9);
+        }
       });
       process.stderr.on("data", (data) => {
         lines.push(data);
       });
+
       process.on("close", async (exitCode) => {
         clearTimeout(jobTimeout);
         resolve({
-          result: lines.join(""),
+          result: lines.join("").substring(0, MAX_CHARACTERS_LIMIT),
           exitCode: exitCode || 0,
         });
       });
