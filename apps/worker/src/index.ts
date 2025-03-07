@@ -16,7 +16,7 @@ function terminateContainer(proc: ChildProcess, container_name: string) {
 
 async function spawnRunner(
   container_name: string,
-  queueJob: QueueJob,
+  queueJob: QueueJob
 ): Promise<JobResult | null> {
   const command = [
     "run",
@@ -85,7 +85,7 @@ async function worker() {
   await redis.hset(
     "executor:jobs",
     queueJob.id,
-    JSON.stringify({ state: "running" } as Job),
+    JSON.stringify({ state: "running" } as Job)
   );
   const container_name = `${queueJob.lang}-runner__${queueJob.id}`;
 

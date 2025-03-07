@@ -9,14 +9,14 @@ import React, { Suspense } from "react";
 
 function Pill({
   icon: Icon,
-  text,
+  children,
   className,
   line = true,
 }: {
   icon: LucideIcon;
-  text: string;
   className?: string;
   line?: boolean;
+  children?: React.ReactNode;
 }) {
   const pillVariants = {
     hidden: { opacity: 0, x: 400 },
@@ -24,7 +24,7 @@ function Pill({
     transition: { duration: 0.3 },
   };
   return (
-    <React.Fragment key={text}>
+    <React.Fragment>
       <motion.div
         className={cn("gr5 p-0.5 w-fit pill-r", className)}
         variants={pillVariants}
@@ -32,7 +32,7 @@ function Pill({
         <div className="pill-bg pill-r">
           <div className="pill-gr p-[16px] pill-r flex gap-2 items-center">
             <Icon className="size-6" />
-            <span>{text}</span>
+            {children}
           </div>
         </div>
       </motion.div>
@@ -64,19 +64,24 @@ export default function HeroPills() {
       animate="visible"
       viewport={{ once: true }}
     >
-      <SnippetCountPill />
-      <Pill icon={GithubIcon} text="100% Open Source" className="ml-[280px]" />
+      <Pill icon={CodeIcon}>
+        <SnippetCompiledText />
+      </Pill>
+      <Pill icon={GithubIcon} className="ml-[280px]">
+        <span>100 % Open Source</span>
+      </Pill>
       <Pill
         icon={CodeIcon}
-        text="Supports multiple languages"
         className="ml-[80px]"
         line={false}
-      />
+      >
+        <span>Supports multiple language</span>
+      </Pill>
     </motion.div>
   );
 }
 
-function SnippetCountPill() {
+function SnippetCompiledText() {
   const { data: compiledCount } = useQuery({
     async queryFn() {
       const stats = await httpClient.get("/stats");
@@ -85,12 +90,8 @@ function SnippetCountPill() {
     },
     queryKey: ["stats"],
   });
-  return (
-    <Suspense>
-      <Pill
-        icon={CheckIcon}
-        text={`${compiledCount || 200} snippets compiled`}
-      />
-    </Suspense>
-  );
+
+  return <span>{compiledCount || "-"} snippets compiled</span>
 }
+
+
